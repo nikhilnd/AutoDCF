@@ -11,21 +11,22 @@
     <div class="content">
         <h1>AutoDCF</h1>
         <form action="">
-            <label for="ticker">Generate a simple DCF model with pre-filled historical data.</label>
+            <label for="ticker">Generate a simple DCF template with pre-filled historical data.</label>
             <input type="text" id="ticker" name="ticker" placeholder="Enter ticker symbol"required>
             <input type="submit" id="submit" value="Download">
         </form>
-        <div class="modal" style="display: none;">
-            <div class="loading-content">
-                <span class="close">&times;</span>
-                <p>Getting data...</p>
-            </div>
+        <p>Bugs? Open an issue <a href="https://github.com/nikhilnd/AutoDCF/issues" target="_blank">here.</a></p>
+    </div>
+    <div class="modal" style="display: none;">
+        <div class="loading-content">
+            <span class="close">&times;</span>
+            <p>Getting data...</p>
         </div>
-        <div class="modal" style="display: none;">
-            <div class="modal-content">
-                <span class="close">&times;</span>
-                <p>Unable to get data. Please check your ticker symbol and try again.</p>
-            </div>
+    </div>
+    <div class="modal" style="display: none;">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <p>Unable to get data. Please check your ticker symbol and try again.</p>
         </div>
     </div>
     <script src="{{ url_for('static', filename='script.js') }}" defer></script>

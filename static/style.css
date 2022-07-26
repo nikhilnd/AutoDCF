@@ -11,11 +11,11 @@ body {
 .content {
     height: fit-content; 
     position: relative; 
-    top: 25%; 
+    top: 23%; 
     background-color: white;
     border: 1px solid black; 
     border-radius: 20px;
-    padding: 5%; 
+    padding: 5% 5% 3% 5%; 
 
     -moz-box-shadow: 5px 15px 5px 0px #888;
     -webkit-box-shadow: 5px 15px 5px 0px #888;
@@ -123,4 +123,21 @@ input {
 #submit:hover {
     cursor: pointer;
     background-color: #c89666;
+}
+
+p {
+    margin: 0; 
+    padding: 0; 
+    font-size: 12px; 
+    text-align: center; 
+    margin-top: 4%; 
+}
+
+a {
+    text-decoration: none;
+    color: #888; 
+}
+
+a:hover {
+    color: black; 
 }
