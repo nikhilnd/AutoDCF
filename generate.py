@@ -3,6 +3,7 @@ import pandas as pd
 from data import get_data, parse_data
 import openpyxl
 import os
+import uuid
 
 def generate_dcf(ticker, path, id):
 
@@ -24,9 +25,11 @@ def generate_dcf(ticker, path, id):
     template = os.path.join(files, "DCF_Template.xlsx")
 
     # Filter and parse necessary data
-    cats = ["Sales/Revenue", "Cost of Goods Sold (COGS) incl. D&A", "Other SG&A", "Research & Development", "Income Tax", "Capital Expenditures", "Depreciation, Depletion & Amortization", "Changes in Working Capital"]
+    cats = ["Sales/Revenue", "Cost of Goods Sold (COGS) incl. D&A", "SG&A Expense", "Research & Development", "Income Tax", "Capital Expenditures", "Depreciation, Depletion & Amortization", "Changes in Working Capital"]
     data = parse_data(dfs, units, cats)
-    data = data.reindex(cats)
+
+    updatedCats = ["Sales/Revenue", "Cost of Goods Sold (COGS) incl. D&A", "SGA", "Research & Development", "Income Tax", "Capital Expenditures", "Depreciation, Depletion & Amortization", "Changes in Working Capital"]
+    data = data.reindex(updatedCats)
     cols = data.columns
 
     row_nums = [7, 9, 13, 15, 19, 21, 23, 24] 
@@ -48,6 +51,8 @@ def generate_dcf(ticker, path, id):
 
     return new_file 
 
+
+### TESTING: 
 # ticker = input("Enter ticker symbol: ")
 # id = uuid.uuid4()
 # file = generate_dcf(ticker, "/Users/nikhildeorkar/code/swe/AutoDCF/src", id)

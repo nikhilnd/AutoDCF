@@ -2,13 +2,6 @@ import requests
 from bs4 import BeautifulSoup
 import pandas as pd
 
-# def test_apply(arr):
-#     arr = arr.copy()
-#     for k, value in enumerate(arr): 
-#         print(value)
-#         arr[k] = 3
-#     return arr
-
 def convert(arr): 
     for k, value in enumerate(arr): 
         if "(" in value: 
@@ -77,22 +70,27 @@ def parse_data(dfs, units, cats):
             dfs[k] = dfs[k].apply(convert)
 
     df = pd.concat(dfs)
+
+    # Calculate new SG&A row
+    df.loc["SGA"] = df.apply(lambda x: (float(x["SG&A Expense"].replace(",", "")) if "-" not in x["SG&A Expense"] else 0) - (float(x["Research & Development"].replace(",", "")) if "-" not in x["Research & Development"] else 0))
+    # Drop old rows
+    df = df.drop(["SG&A Expense"], axis=0)
+
     return df
 
-for attempts in range(0, 3): 
-    try: 
-        dfs, units = get_data("SBUX")
-        break 
-    except: 
-        if(attempts == 2): 
-            print("Failed to get data")
-            exit() 
-        print("Something went wrong. Trying again...")
-
-# cats = ["Sales/Revenue", "Cost of Goods Sold (COGS) incl. D&A", "Other SG&A", "Research & Development", "Income Tax", "Capital Expenditures", "Depreciation, Depletion & Amortization", "Changes in Working Capital"]
-cats = ["Sales/Revenue", "Cost of Goods Sold (COGS) incl. D&A", "SG&A Expense", "Research & Development", "Income Tax", "Capital Expenditures", "Depreciation, Depletion & Amortization", "Changes in Working Capital"] # Also include total SGA 
-df = parse_data(dfs, units, cats)
-df.loc["SGA"] = df.apply(lambda x: (float(x["SG&A Expense"].replace(",", "")) if "-" not in x["SG&A Expense"] else 0) - (float(x["Research & Development"].replace(",", "")) if "-" not in x["Research & Development"] else 0)) # Calculate new row (total SGA - R&D)
-df = df.drop(["SG&A Expense"], axis=0) # Drop total SGA, not needed
-df.to_csv("data.csv")
+# ## TESTING: 
+# for attempts in range(0, 3): 
+#     try: 
+#         dfs, units = get_data("SBUX")
+#         break 
+#     except: 
+#         if(attempts == 2): 
+#             print("Failed to get data")
+#             exit() 
+#         print("Something went wrong. Trying again...")
+## cats = ["Sales/Revenue", "Cost of Goods Sold (COGS) incl. D&A", "Other SG&A", "Research & Development", "Income Tax", "Capital Expenditures", "Depreciation, Depletion & Amortization", "Changes in Working Capital"]
+## New cats: 
+# cats = ["Sales/Revenue", "Cost of Goods Sold (COGS) incl. D&A", "SG&A Expense", "Research & Development", "Income Tax", "Capital Expenditures", "Depreciation, Depletion & Amortization", "Changes in Working Capital"]
+# df = parse_data(dfs, units, cats)
+# df.to_csv("data.csv")
 
