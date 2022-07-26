@@ -35,7 +35,8 @@ def main():
         # Remove local file
         os.remove(new_file)
         files = os.path.join(path, "files")
-        os.rmdir(files + "/" + str(unique))
+        # os.rmdir(files + "/" + str(unique))
+        os.rmdir(os.path.join(files, str(unique)))
 
         # Send file
         file_name = "DCF_" + ticker + ".xlsx"
